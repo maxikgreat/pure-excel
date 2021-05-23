@@ -11,17 +11,19 @@ const $: $function = () => new Dom();
 
 export default $;
 
-Object.defineProperty($, 'create', {
-  enumerable: true,
-  configurable: true,
-  writable: true,
-  value: (tagName: keyof HTMLElementTagNameMap, classes?: string) => {
-    const el = document.createElement(tagName);
+Object.defineProperties($, {
+  create: {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: (tagName: keyof HTMLElementTagNameMap, classes?: string) => {
+      const el = document.createElement(tagName);
 
-    if (classes) {
-      el.classList.add(classes);
-    }
+      if (classes) {
+        el.classList.add(classes);
+      }
 
-    return el;
+      return el;
+    },
   },
 });

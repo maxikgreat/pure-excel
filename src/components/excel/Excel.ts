@@ -2,6 +2,7 @@ import {Header, Formula, Table, Toolbar} from '@/components';
 import $ from '@core/dom';
 
 type Components = [typeof Header, typeof Toolbar, typeof Formula, typeof Table]
+type Intances = (Header | Toolbar | Formula | Table)[] | [];
 
 type ExcelOptions = {
   components: Components,
@@ -10,6 +11,7 @@ type ExcelOptions = {
 class Excel {
   private readonly $rootElement: HTMLElement;
   private components: Components;
+  private instances: Intances = [];
 
   /**
    * @param {string} selector of root div in HTML
@@ -28,13 +30,14 @@ class Excel {
   private getRoot(): HTMLDivElement {
     const $root = $.create('div', 'excel') as HTMLDivElement;
 
-    this.components.forEach((Component) => {
+    this.instances = this.components.map((Component) => {
       const $container = $.create('div', Component.className);
 
       const component = new Component($container);
       $container.innerHTML = component.toHTML();
 
       $root.append($container);
+      return component;
     });
 
     return $root;
@@ -42,6 +45,8 @@ class Excel {
 
   public render(): void {
     this.$rootElement.append(this.getRoot());
+
+    this.instances.forEach((instance) => instance.init());
   }
 }
 
