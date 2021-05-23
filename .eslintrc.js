@@ -15,7 +15,9 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    semi: ['error', 'always'],
     'quote-props': ['error', 'as-needed'],
     'require-jsdoc': 'off',
+    'max-len': 'off',
   },
 };
