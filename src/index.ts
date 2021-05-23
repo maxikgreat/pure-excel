@@ -1,12 +1,8 @@
-console.log('red');
 import './scss/index.scss';
-// eslint-disable-next-line no-unused-vars
-const a: number = 25;
+import {Excel, Formula, Header, Table, Toolbar} from '@components/index';
 
-async function start() {
-  await Promise.resolve();
-}
+const excel = new Excel('#app', {
+  components: [Header, Toolbar, Formula, Table],
+});
 
-start();
-
-export {};
+excel.render();
