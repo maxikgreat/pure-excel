@@ -5,7 +5,7 @@ class Table extends ExcelComponent {
   static className = 'excel__table';
 
   public toHTML(): string {
-    return createTable(15);
+    return createTable(20);
   }
 }
 
