@@ -19,5 +19,6 @@ module.exports = {
     'quote-props': ['error', 'as-needed'],
     'require-jsdoc': 'off',
     'max-len': 'off',
+    'no-invalid-this': 'off',
   },
 };

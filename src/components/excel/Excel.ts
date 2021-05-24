@@ -2,7 +2,7 @@ import {Header, Formula, Table, Toolbar} from '@/components';
 import $ from '@core/dom';
 
 type Components = [typeof Header, typeof Toolbar, typeof Formula, typeof Table]
-type Intances = (Header | Toolbar | Formula | Table)[] | [];
+type Instances = (Header | Toolbar | Formula | Table)[] | [];
 
 type ExcelOptions = {
   components: Components,
@@ -11,7 +11,7 @@ type ExcelOptions = {
 class Excel {
   private readonly $rootElement: HTMLElement;
   private components: Components;
-  private instances: Intances = [];
+  private instances: Instances = [];
 
   /**
    * @param {string} selector of root div in HTML
@@ -25,6 +25,7 @@ class Excel {
   /**
    * @private getRoot for separate forming login of root container
    * with main components
+   *
    * @return {HTMLDivElement} formed root container
    */
   private getRoot(): HTMLDivElement {

@@ -11,7 +11,7 @@ interface ComponentListenerOptions {
 }
 
 class ExcelComponent extends DomListener implements ExcelComponentInterface {
-  private name: string = '';
+  public name: string = '';
 
   constructor($root: HTMLElement, options?: ComponentListenerOptions) {
     super($root, options?.listeners ?? []);
@@ -29,6 +29,10 @@ class ExcelComponent extends DomListener implements ExcelComponentInterface {
 
   public init(): void {
     this.initListeners();
+  }
+
+  public remove(): void {
+    this.removeListeners();
   }
 }
 

@@ -17,9 +17,12 @@ class Formula extends ExcelComponent {
     `;
   }
 
-  public onInput(event: { target: HTMLDivElement }) {
-    console.log(this);
+  protected onInput(event: { target: HTMLDivElement }): void {
     console.log('on input formula works!', event.target?.textContent?.trim());
+  }
+
+  protected onClick(event: { target: HTMLDivElement }):void {
+    console.log('onclick');
   }
 }
 
