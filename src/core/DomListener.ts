@@ -1,6 +1,5 @@
 import {capitalize} from '@core/utils';
 
-
 const getMethodName = (eventName: string) => `on${capitalize(eventName)}`;
 
 class DomListener {
@@ -11,6 +10,17 @@ class DomListener {
    */
   constructor(private $root: HTMLElement, private listeners: string[]) {}
 
+  private checkMethodExistInChildClass(listener: string): string | never {
+    const method = getMethodName(listener);
+    // @ts-expect-error
+    if (!this[method]) {
+      // @ts-expect-error
+      throw new Error(`Implement method '${method}' in '${this.name}' component`);
+    }
+
+    return method;
+  };
+
   /**
    * @protected method to add listeners to their containers.
    * Also keyword 'this' in this case (how funny, not) related to component class.
@@ -19,22 +29,25 @@ class DomListener {
    */
   protected initListeners(): void {
     this.listeners.forEach((listener) => {
-      const method = getMethodName(listener);
+      const method = this.checkMethodExistInChildClass(listener);
       // @ts-expect-error
-      if (!this[method]) {
-        // @ts-expect-error
-        throw new Error(`Implement method '${method}' in '${this.name}' component`);
-      }
+      this[method] = this[method].bind(this);
       // @ts-expect-error
-      this.$root.addEventListener(listener, (this[method] as Function).bind(this));
+      this.$root.addEventListener(listener, this[method]);
     });
   }
 
   /**
-   *
+   * @protected remove all listeners attached to container.
    */
-  protected removeListeners() {
+  protected removeListeners(): void {
+    this.listeners.forEach((listener) => {
+      const method = this.checkMethodExistInChildClass(listener);
+      // @ts-expect-error
+      this.$root.removeEventListener(listener, this[method]);
+    });
 
+    this.listeners = [];
   }
 }
 
