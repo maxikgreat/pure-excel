@@ -6,11 +6,13 @@ const CODES = {
 /**
  * return a plain empty excel cell
  *
+ * @param {string} _
+ * @param {number} colIndex of elem
  * @return {string} cell template
  */
-const createCell = (): string => {
+const createCell = (_: string, colIndex: number): string => {
   return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" contenteditable data-column="${colIndex}"></div>
   `;
 };
 
@@ -18,11 +20,15 @@ const createCell = (): string => {
  * return an excel column with A, B, C, D, E values
  *
  * @param {string} elem
+ * @param {number} index of elem
  * @return {string} column template
  */
-const createCol = (elem: string): string => {
+const createCol = (elem: string, index: number): string => {
   return `
-    <div class="column">${elem}</div>
+    <div class="column" data-type="resizable" data-column="${index}">
+      ${elem}
+      <div class="column-resize" data-resize="column"></div>
+    </div>
   `;
 };
 
@@ -35,8 +41,11 @@ const createCol = (elem: string): string => {
  */
 const createRow = (content: string, index?: number): string => {
   return `
-    <div class="row">
-      <div class="row-info">${index ?? ''}</div>
+    <div class="row" data-type="resizable">
+      <div class="row-info">
+        ${index ?? ''}
+        ${index ? '<div class="row-resize" data-resize="row"></div>' : ''}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;

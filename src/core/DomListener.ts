@@ -8,7 +8,7 @@ class DomListener {
    * E.g. <div class="excel__header">...</div> for Header component.
    * @param {string[]} event listeners for it
    */
-  constructor(private $root: HTMLElement, private listeners: string[]) {}
+  constructor(protected $root: HTMLElement, private listeners: string[]) {}
 
   private checkMethodExistInChildClass(listener: string): string | never {
     const method = getMethodName(listener);
