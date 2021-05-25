@@ -1,3 +1,15 @@
+/**
+ * function handles resizing of 'column' and 'row' elements.
+ * Needed elements we got throw data-* attributes in HTML.
+ * data-resize - resizer component to drag it
+ * data-resizable - component that will be resized after resizer will be shifted
+ *
+ * Also to shift columns data-column attribute is used. With it we understand
+ * what particular column we need to move.
+ *
+ * @param {HTMLElement} $root
+ * @param {HTMLDivElement} target
+ */
 const resizeHandler = ($root: HTMLElement, target: HTMLDivElement | null): void => {
   if (!target) return;
 
