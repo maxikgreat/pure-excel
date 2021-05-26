@@ -7,7 +7,7 @@ class TableSelection {
   }
 
   public selectGroup() {
-
+    console.log('check');
   }
 }
 
