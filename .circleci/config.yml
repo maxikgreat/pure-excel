@@ -41,10 +41,6 @@ workflows:
   run_ci:
     jobs:
       - lint-and-test:
-          filters:
-            branches:
-              only:
-                - main
       - build:
           requires:
             - lint-and-test
