@@ -8,6 +8,7 @@ class TableSelection {
 
   public selectGroup() {
     console.log('check');
+    console.log('one more time check');
   }
 }
 
