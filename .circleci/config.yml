@@ -27,7 +27,9 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - setup-node
+      - node/install:
+          node-version: 14.15.1
+          npm-version: 7.12.0
       - install-packages
       - run:
           name: Build
