@@ -9,7 +9,7 @@ interface MouseEventOnDiv extends MouseEvent {
 
 class Table extends ExcelComponent {
   static className = 'excel__table';
-  private selection: TableSelection | null = null;
+  private selection = new TableSelection();
 
   constructor($root: HTMLElement) {
     super($root, {
@@ -25,11 +25,16 @@ class Table extends ExcelComponent {
   public init() {
     super.init();
 
-    this.selection = new TableSelection();
+    const $cell = this.$root.querySelector<HTMLDivElement>('[data-id="0:0"]');
+    this.selection.select($cell);
   }
 
   protected onMousedown({target}: MouseEventOnDiv): void {
-    resizeHandler(this.$root, target);
+    if (target?.dataset.type === 'cell') {
+      this.selection.select(target);
+    } else {
+      resizeHandler(this.$root, target);
+    }
   }
 }
 
