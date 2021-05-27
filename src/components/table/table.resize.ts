@@ -10,9 +10,7 @@
  * @param {HTMLElement} $root
  * @param {HTMLDivElement} target
  */
-const resizeHandler = ($root: HTMLElement, target: HTMLDivElement | null): void => {
-  if (!target) return;
-
+const resizeHandler = ($root: HTMLElement, target: HTMLDivElement): void => {
   const parent = target.closest<HTMLDivElement>('[data-type="resizable"]');
   if (!parent) return;
 
