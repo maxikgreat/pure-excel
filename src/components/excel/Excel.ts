@@ -47,6 +47,8 @@ class Excel {
   public render(): void {
     this.$rootElement.append(this.getRoot());
 
+    console.log(new Table($.create('div', 'test')));
+
     this.instances.forEach((instance) => instance.init());
   }
 }

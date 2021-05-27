@@ -4,15 +4,20 @@ const CODES = {
 };
 
 /**
- * return a plain empty excel cell
+ * return a function that return plain empty excel cell
  *
- * @param {string} _
- * @param {number} colIndex of elem
- * @return {string} cell template
+ * @param {number} rowIndex index
+ * @return {Function} with .map arguments
  */
-const createCell = (_: string, colIndex: number): string => {
+const createCell = (rowIndex: number) => (_: string, colIndex: number): string => {
   return `
-    <div class="cell" contenteditable data-column="${colIndex}"></div>
+    <div
+      contenteditable
+      class="cell"
+      data-type="cell"
+      data-column="${colIndex}"
+      data-id="${rowIndex}:${colIndex}"
+    ></div>
   `;
 };
 
@@ -73,7 +78,7 @@ export default function(rowsCount: number): string {
   rows.push(createRow(cols));
 
   for (let i = 0; i < rowsCount; i++) {
-    const cells = createColsArray(createCell);
+    const cells = createColsArray(createCell(i));
     rows.push(createRow(cells, i + 1));
   }
 

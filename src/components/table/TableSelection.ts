@@ -1,15 +1,25 @@
 
 class TableSelection {
-  constructor(private group: HTMLElement[]) {}
+  static className = 'selected';
 
-  public select($element: HTMLElement) {
+  private group: HTMLDivElement[] = []
+  constructor() {}
+
+  private clear() {
+    this.group.forEach(($cell) => $cell.classList.remove(TableSelection.className));
+    this.group.length = 0;
+  }
+
+  public select($element: HTMLDivElement | null) {
+    if (!$element) return;
+
+    this.clear();
+
     this.group.push($element);
+    $element.classList.add(TableSelection.className);
   }
 
-  public selectGroup() {
-    console.log('check');
-    console.log('one more time check');
-  }
+  public selectGroup() {}
 }
 
 export default TableSelection;

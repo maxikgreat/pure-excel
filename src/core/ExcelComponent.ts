@@ -1,8 +1,9 @@
 import DomListener from '@core/DomListener';
 
 interface ExcelComponentInterface {
-  toHTML: () => string,
   init: () => void,
+  remove: () => void,
+  toHTML: () => string,
 }
 
 interface ComponentListenerOptions {
@@ -18,6 +19,14 @@ class ExcelComponent extends DomListener implements ExcelComponentInterface {
     this.name = options?.name ?? '';
   }
 
+  public init(): void {
+    this.initListeners();
+  }
+
+  public remove(): void {
+    this.removeListeners();
+  }
+
   /**
    * Returns the HTML template of a component
    *
@@ -25,14 +34,6 @@ class ExcelComponent extends DomListener implements ExcelComponentInterface {
    */
   public toHTML(): string {
     return '';
-  }
-
-  public init(): void {
-    this.initListeners();
-  }
-
-  public remove(): void {
-    this.removeListeners();
   }
 }
 
