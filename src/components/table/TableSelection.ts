@@ -3,6 +3,8 @@ class TableSelection {
   static className = 'selected';
 
   private group: HTMLDivElement[] = []
+  public current: HTMLDivElement | null = null;
+
   constructor() {}
 
   private clear() {
@@ -15,11 +17,18 @@ class TableSelection {
 
     this.clear();
 
+    this.current = $element;
+
     this.group.push($element);
     $element.classList.add(TableSelection.className);
   }
 
-  public selectGroup() {}
+  public selectGroup($elements: HTMLDivElement[]) {
+    this.clear();
+
+    this.group = $elements;
+    this.group.forEach(($cell) => $cell.classList.add(TableSelection.className));
+  }
 }
 
 export default TableSelection;

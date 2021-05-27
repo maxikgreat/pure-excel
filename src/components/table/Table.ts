@@ -1,11 +1,13 @@
 import ExcelComponent from '@core/ExcelComponent';
+import TableSelection from './TableSelection';
 import resizeHandler from './table.resize';
 import createTable from './table.template';
-import TableSelection from './TableSelection';
+import {calculateMatrix} from '@components/table/table.functions';
 
 interface MouseEventOnDiv extends MouseEvent {
   target: HTMLDivElement | null
 }
+
 
 class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -29,9 +31,21 @@ class Table extends ExcelComponent {
     this.selection.select($cell);
   }
 
-  protected onMousedown({target}: MouseEventOnDiv): void {
-    if (target?.dataset.type === 'cell') {
-      this.selection.select(target);
+  protected onMousedown({target, shiftKey}: MouseEventOnDiv): void {
+    if (!target) return;
+
+    if (target.dataset.type === 'cell' && this.selection.current) {
+      if (shiftKey) {
+        const $cells = calculateMatrix(
+          target.dataset.id as string,
+          this.selection.current.dataset.id as string,
+        )
+            .map((id) => this.$root.querySelector<HTMLDivElement>(`[data-id="${id}"]`));
+
+        this.selection.selectGroup($cells as HTMLDivElement[]);
+      } else {
+        this.selection.select(target);
+      }
     } else {
       resizeHandler(this.$root, target);
     }
