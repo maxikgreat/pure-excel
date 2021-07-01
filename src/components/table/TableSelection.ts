@@ -20,6 +20,7 @@ class TableSelection {
     this.current = $element;
 
     this.group.push($element);
+    $element.focus();
     $element.classList.add(TableSelection.className);
   }
 
