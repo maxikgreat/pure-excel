@@ -1,12 +1,14 @@
 import ExcelComponent from '@core/ExcelComponent';
+import Emitter from '@core/Emitter';
 
 class Toolbar extends ExcelComponent {
   static className = 'excel__toolbar';
 
-  constructor($root: HTMLElement) {
+  constructor($root: HTMLElement, emitter: Emitter) {
     super($root, {
       name: 'Toolbar',
       listeners: ['click'],
+      emitter,
     });
   }
 

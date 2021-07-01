@@ -3,6 +3,7 @@ import TableSelection from './TableSelection';
 import resizeHandler from './table.resize';
 import createTable from './table.template';
 import {calculateMatrix, getNextSelector} from '@components/table/table.functions';
+import Emitter from '@core/Emitter';
 
 interface MouseEventOnDiv extends MouseEvent {
   target: HTMLDivElement | null
@@ -21,10 +22,11 @@ class Table extends ExcelComponent {
   static className = 'excel__table';
   private selection = new TableSelection();
 
-  constructor($root: HTMLElement) {
+  constructor($root: HTMLElement, emitter: Emitter) {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'keydown'],
+      emitter,
     });
   }
 
@@ -37,6 +39,13 @@ class Table extends ExcelComponent {
 
     const $cell = this.$root.querySelector<HTMLDivElement>('[data-id="0:0"]');
     this.selection.select($cell);
+
+    this.subscribe<string>('formula:input', (text) => {
+      const selectionElement = this.selection.current;
+      if (!selectionElement) return;
+
+      selectionElement.textContent = text;
+    });
   }
 
   protected onMousedown({target, shiftKey}: MouseEventOnDiv): void {
