@@ -1,3 +1,5 @@
+import {EventKey} from './Table';
+
 /**
  * convert string "1:2" to object {row: 1, col: 2}
  *
@@ -47,4 +49,31 @@ const calculateMatrix = (targetPosition: string, currentPosition: string): strin
   }, []);
 };
 
-export {parseDatasetIdProp, getRange, calculateMatrix};
+const getNextSelector = (key: EventKey, currentPosition: string): string => {
+  const currentCoords = parseDatasetIdProp(currentPosition);
+
+  switch (key) {
+    case 'Enter':
+    case 'ArrowDown':
+      currentCoords.row++;
+      break;
+    case 'Tab':
+    case 'ArrowRight':
+      currentCoords.col++;
+      break;
+    case 'ArrowLeft':
+      currentCoords.col--;
+      break;
+    case 'ArrowUp':
+      currentCoords.row--;
+      break;
+    default:
+      break;
+  }
+
+  const {row, col} = currentCoords;
+
+  return `[data-id="${row}:${col}"]`;
+};
+
+export {parseDatasetIdProp, getRange, calculateMatrix, getNextSelector};
