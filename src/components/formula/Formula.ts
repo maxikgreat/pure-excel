@@ -1,12 +1,14 @@
 import ExcelComponent from '@core/ExcelComponent';
+import Emitter from '@core/Emitter';
 
 class Formula extends ExcelComponent {
   static className = 'excel__formula';
 
-  constructor($root: HTMLElement) {
+  constructor($root: HTMLElement, emitter: Emitter) {
     super($root, {
       name: 'Formula',
-      listeners: ['input', 'click'],
+      listeners: ['input'],
+      emitter,
     });
   }
 
@@ -18,11 +20,11 @@ class Formula extends ExcelComponent {
   }
 
   protected onInput(event: { target: HTMLDivElement }): void {
-    console.log('on input formula works!', event.target?.textContent?.trim());
-  }
+    const inputValue = event.target?.textContent?.trim();
 
-  protected onClick(event: { target: HTMLDivElement }):void {
-    console.log('onclick');
+    if (!inputValue) return;
+
+    this.emit<string>('formula:input', inputValue);
   }
 }
 

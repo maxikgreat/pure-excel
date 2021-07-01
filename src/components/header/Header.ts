@@ -1,8 +1,15 @@
 import ExcelComponent from '@core/ExcelComponent';
+import Emitter from '@core/Emitter';
 
 class Header extends ExcelComponent {
   static className = 'excel__header';
 
+  constructor($root: HTMLElement, emitter: Emitter) {
+    super($root, {
+      name: 'Header',
+      emitter,
+    });
+  }
   public toHTML(): string {
     return `
       <input type="text" class="input" value="New Table" />
