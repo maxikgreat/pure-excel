@@ -25,7 +25,7 @@ class Table extends ExcelComponent {
   constructor($root: HTMLElement, emitter: Emitter) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown'],
+      listeners: ['mousedown', 'keydown', 'input'],
       emitter,
     });
   }
@@ -34,17 +34,26 @@ class Table extends ExcelComponent {
     return createTable(20);
   }
 
+  private selectCell($cell: HTMLDivElement | null) {
+    this.selection.select($cell);
+    this.emit<typeof $cell>('table:select', $cell);
+  }
+
   public init() {
     super.init();
 
     const $cell = this.$root.querySelector<HTMLDivElement>('[data-id="0:0"]');
-    this.selection.select($cell);
+    this.selectCell($cell);
 
     this.subscribe<string>('formula:input', (text) => {
       const selectionElement = this.selection.current;
       if (!selectionElement) return;
 
       selectionElement.textContent = text;
+    });
+
+    this.subscribe<undefined>('formula:done', () => {
+      this.selection.current?.focus();
     });
   }
 
@@ -89,7 +98,11 @@ class Table extends ExcelComponent {
 
     const target = this.$root.querySelector<HTMLDivElement>(nextSelector);
 
-    this.selection.select(target);
+    this.selectCell(target);
+  }
+
+  protected onInput(event: { target: HTMLDivElement }) {
+    this.emit<HTMLDivElement>('table:input', event.target);
   }
 }
 
