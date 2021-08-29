@@ -7,7 +7,7 @@ interface EmitterListeners {
 class Emitter {
   constructor(private listeners: EmitterListeners = {}) {}
 
-  public emit<T>(event: string, data: T): void {
+  public emit<T>(event: string, data?: T): void {
     const subscribers = this.listeners[event];
     if (!Array.isArray(subscribers)) {
       return;

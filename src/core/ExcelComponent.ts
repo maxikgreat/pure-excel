@@ -25,7 +25,7 @@ class ExcelComponent extends DomListener implements ExcelComponentInterface {
     this.emitter = options.emitter;
   }
 
-  protected emit<T>(event: string, data: T): void {
+  protected emit<T>(event: string, data?: T): void {
     this.emitter.emit<T>(event, data);
   }
 
